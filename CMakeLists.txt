@@ -156,6 +156,11 @@ if(SURELOG_WITH_TCMALLOC)
   endif()
 endif()
 
+find_package(ZLIB)
+if(ZLIB_LIBRARY)
+  message("-- Found zlib: ${ZLIB_LIBRARY}")
+endif()
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TCMALLOC_COMPILE_OPTIONS} ${MY_CXX_WARNING_FLAGS}")
 
 if(MSVC)
@@ -579,6 +584,12 @@ endif()
 
 if (TCMALLOC_LIBRARY)
    target_link_libraries(surelog PRIVATE ${TCMALLOC_LIBRARY})
+endif()
+
+
+if (ZLIB_LIBRARY)
+  target_compile_definitions(surelog PRIVATE ENABLE_ZLIB)
+  target_link_libraries(surelog PRIVATE ${ZLIB_LIBRARY})
 endif()
 
 if (UNIX)
