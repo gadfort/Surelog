@@ -589,7 +589,11 @@ endif()
 
 if (ZLIB_LIBRARY)
   target_compile_definitions(surelog PRIVATE ENABLE_ZLIB)
-  target_link_libraries(surelog PRIVATE ${ZLIB_LIBRARY})
+  target_include_directories(surelog PRIVATE ${ZLIB_INCLUDE_DIRS})
+  target_link_libraries(surelog PUBLIC ${ZLIB_LIBRARY})
+  set(ZLIB_LIB_PC_LINK "-lz")
+else()
+  set(ZLIB_LIB_PC_LINK "")
 endif()
 
 if (UNIX)
